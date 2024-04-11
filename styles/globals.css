@@ -9,7 +9,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  background-color: #0E1116;
   color: #F8F9FC;
 }
 
@@ -20,8 +19,13 @@ button {
   font-family: "Nunito Sans", sans-serif;
   font-weight: 400;
   font-size: 1rem;
+  background-color: #0E1116;
 }
 
 button:hover {
   cursor: pointer;
+}
+
+.ant-modal-content, .ant-modal-body{
+  background-color: #252D4A!important; 
 }
