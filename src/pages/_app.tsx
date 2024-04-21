@@ -2,6 +2,7 @@ import LayoutDefault from "@/components/layouts/LayoutDefault";
 import "../../styles/globals.css";
 
 import { SessionProvider } from "next-auth/react";
+import { FeaturesProvider } from "@/contexts/features/FeaturesContext";
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
@@ -9,9 +10,11 @@ export default function App({
   const Layout = Component.Layout || LayoutDefault;
   return (
     <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <FeaturesProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </FeaturesProvider>
     </SessionProvider>
   );
 }

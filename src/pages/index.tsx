@@ -1,7 +1,11 @@
 import Head from "next/head";
 import { Password } from "@phosphor-icons/react";
+import { useContext } from "react";
+import { FeaturesContext } from "@/contexts/features/FeaturesContext";
+import CardFeature from "@/components/molecules/CardFeature";
 
 export default function Home() {
+  const { features } = useContext(FeaturesContext);
   return (
     <>
       <Head>
@@ -28,38 +32,15 @@ export default function Home() {
         <div className="flex flex-col mt-8">
           <h1 className="text-2xl text-bold">Funcionalidades</h1>
           <div className="flex flex-row justify-center mt-8 gap-4 md:gap-8 wrap">
-            <div className="flex flex-row h-14 w-80 rounded-lg overflow-hidden">
-              <div className="bg-purple-200 w-1/4 flex items-center justify-center">
-                <Password size={32} style={{ background: "transparent" }} />
-              </div>
-              <div className="bg-gray-700 text-xl w-3/4 flex items-center justify-center">
-                Gerador de Senhas
-              </div>
-            </div>
-            <div className="flex flex-row h-14 w-80 rounded-lg overflow-hidden">
-              <div className="bg-purple-200 w-1/4 flex items-center justify-center">
-                <Password size={32} style={{ background: "transparent" }} />
-              </div>
-              <div className="bg-gray-700 text-xl w-3/4 flex items-center justify-center">
-                Gerador de Senhas
-              </div>
-            </div>
-            <div className="flex flex-row h-14 w-80 rounded-lg overflow-hidden">
-              <div className="bg-purple-200 w-1/4 flex items-center justify-center">
-                <Password size={32} style={{ background: "transparent" }} />
-              </div>
-              <div className="bg-gray-700 text-xl w-3/4 flex items-center justify-center">
-                Gerador de Senhas
-              </div>
-            </div>
-            <div className="flex flex-row h-14 w-80 rounded-lg overflow-hidden">
-              <div className="bg-purple-200 w-1/4 flex items-center justify-center">
-                <Password size={32} style={{ background: "transparent" }} />
-              </div>
-              <div className="bg-gray-700 text-xl w-3/4 flex items-center justify-center">
-                Gerador de Senhas
-              </div>
-            </div>
+            {features.map((feature) => {
+              return (
+                <CardFeature
+                  key={feature.id}
+                  id={feature.id}
+                  title={feature.title}
+                />
+              );
+            })}
           </div>
         </div>
       </main>
