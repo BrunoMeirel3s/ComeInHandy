@@ -9,9 +9,11 @@ import {
 import { FeaturesContext } from "@/contexts/features/FeaturesContext";
 import React, { useContext, useEffect, useState } from "react";
 import useCopyToClipboard from "@/hooks/useCopyToClipboard";
+import SideBarOtherFeatures from "@/components/organisms/SideBarOtherFeatures";
+import Button from "@/components/atoms/Button";
 
 export default function GeradorSenhas() {
-  const { features, generateRandomPassword } = useContext(FeaturesContext);
+  const { generateRandomPassword } = useContext(FeaturesContext);
   const { isCopied, copyToClipboard } = useCopyToClipboard();
   const [api, contextHolder] = notification.useNotification();
   const [qtdCaracteres, setQtdCaracteres] = useState<number | string>(8);
@@ -20,10 +22,6 @@ export default function GeradorSenhas() {
   const [habCaracteresEspeciais, setHabCaracteresEspeciais] = useState(false);
   const [habNumeros, setHabNumeros] = useState(false);
   const [habHexadecimal, setHabHexadecimal] = useState(false);
-
-  const otherFeatures = features.filter(
-    (feature) => feature.id !== "geradorSenhas"
-  );
 
   function handleCopyToClipboard(text: string | number) {
     copyToClipboard(text);
@@ -74,29 +72,19 @@ export default function GeradorSenhas() {
                   value={senhaGerada}
                   onChange={(e) => setSenhaGerada(e.target.value)}
                 />
-                <button
-                  className={`
-                bg-purple-200 hover:bg-purple-200 border-none h-12 
-                rounded-md p-4 flex justify-center items-center
-                hover:brightness-75
-                w-56
-              `}
+                <Button
+                  className={"w-56"}
                   onClick={(e) => handleGenerateRandomPassword()}
                 >
                   <span className="text-xl">Gerar senha</span>
-                </button>
+                </Button>
               </div>
-              <button
-                className={`
-                bg-purple-200 hover:bg-purple-200 border-none h-12 
-                rounded-md p-4 flex justify-center items-center
-                hover:brightness-75
-                w-56
-              `}
+              <Button
+                className={"w-56"}
                 onClick={(e) => handleCopyToClipboard(senhaGerada)}
               >
                 <span className="text-xl">Copiar</span>
-              </button>
+              </Button>
               <div className="flex flex-col gap-4">
                 <Radio
                   className="text-2xl"
@@ -126,22 +114,8 @@ export default function GeradorSenhas() {
           </div>
         </div>
 
-        <div
-          className="w-full md:w-1/5 p-4 mt-4 md:mt-0 md:border-l md:border-gray-700"
-        >
-          <p className="text-xl">Outras Funcionalidades</p>
-          <div className="flex flex-col gap-4 mt-4 items-center md:items-start">
-            {otherFeatures &&
-              otherFeatures.map((feature) => {
-                return (
-                  <CardFeature
-                    key={feature.id}
-                    id={feature.id}
-                    title={feature.title}
-                  />
-                );
-              })}
-          </div>
+        <div className="w-full md:w-1/5 p-4 mt-4 md:mt-0 md:border-l md:border-gray-700">
+          <SideBarOtherFeatures ActualFeature="geradorSenhas" />
         </div>
       </div>
     </>
