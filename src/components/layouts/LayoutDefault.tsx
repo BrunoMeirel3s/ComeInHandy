@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar, Tooltip } from "antd";
+import Link from "next/link";
 
 export default function LayoutDefault({ children }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -19,14 +20,14 @@ export default function LayoutDefault({ children }) {
         }}
       >
         <Tooltip placement="bottom" title="Retonar ao home">
-          <a href="/">
+          <Link href="/">
             <Image
               src={"/fulllogo.png"}
               alt="ComeInHandy"
               width={198}
               height={51}
             />
-          </a>
+          </Link>
         </Tooltip>
 
         {session?.user ? (
