@@ -18,12 +18,16 @@ export default function LayoutDefault({ children }) {
             "linear-gradient(90deg, rgba(20,35,45,1) 0%, rgba(18,21,40,1) 8%, rgba(19,23,33,1) 92%, rgba(20,35,45,1) 100%)",
         }}
       >
-        <Image
-          src={"/fulllogo.png"}
-          alt="ComeInHandy"
-          width={198}
-          height={51}
-        />
+        <Tooltip placement="bottom" title="Retonar ao home">
+          <a href="/">
+            <Image
+              src={"/fulllogo.png"}
+              alt="ComeInHandy"
+              width={198}
+              height={51}
+            />
+          </a>
+        </Tooltip>
 
         {session?.user ? (
           <>
@@ -85,7 +89,7 @@ export default function LayoutDefault({ children }) {
           </div>
         </div>
       </Modal>
-      <div className="z-auto overflow-y-auto w-full min-h-full p-8">
+      <div className="z-auto overflow-y-auto w-full min-h-full p-2 md:p-8">
         {children}
       </div>
     </>
