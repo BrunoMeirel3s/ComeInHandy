@@ -57,7 +57,7 @@ export function FeaturesProvider({ children }: FeaturesProviderProps) {
     const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseChars = includeUppercase ? lowercaseChars.toUpperCase() : "";
     const numberChars = includeNumbers ? "0123456789" : "";
-    const symbolChars = includeSymbols ? "@#$%^&*()-+=\\:;'<>.?/" : "";
+    const symbolChars = includeSymbols ? "@#$%^&*()-+=:;'<>.?" : "";
 
     // Combine character sets based on flags
     let charSet = lowercaseChars;

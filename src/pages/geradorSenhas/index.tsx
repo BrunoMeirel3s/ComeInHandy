@@ -1,5 +1,11 @@
 import CardFeature from "@/components/molecules/CardFeature";
-import { Input, Radio, notification, NotificationArgsProps } from "antd";
+import {
+  Input,
+  InputNumber,
+  Radio,
+  notification,
+  NotificationArgsProps,
+} from "antd";
 import { FeaturesContext } from "@/contexts/features/FeaturesContext";
 import React, { useContext, useEffect, useState } from "react";
 import useCopyToClipboard from "@/hooks/useCopyToClipboard";
@@ -28,7 +34,6 @@ export default function GeradorSenhas() {
         description: `Senha copiada com sucesso!`,
         placement: "bottomRight",
         duration: 5,
-        style: { background: "#6cbf6c" },
       });
   }
 
@@ -45,9 +50,9 @@ export default function GeradorSenhas() {
   }
 
   useEffect(() => {
-    habCaracteresEspeciais && setHabHexadecimal(false);
-    habHexadecimal && setHabCaracteresEspeciais(false);
-  }, [habCaracteresEspeciais, habNumeros, habHexadecimal])
+    // habCaracteresEspeciais && setHabHexadecimal(false);
+    // habHexadecimal && setHabCaracteresEspeciais(false);
+  }, [habCaracteresEspeciais, habNumeros, habHexadecimal]);
 
   return (
     <>
@@ -60,11 +65,11 @@ export default function GeradorSenhas() {
           <div className="w-4/5 flex flex-col items-center gap-4">
             <div className="flex flex-row gap-4 justify-center items-center">
               <span>Qtd. caracteres</span>
-              <Input
-                className="h-12 text-3xl"
+              <InputNumber
+                className="h-12 text-3xl flex justify-center items-center"
                 value={qtdCaracteres}
-                onChange={(e) => setQtdCaracteres(e.target.value)}
-                style={{ width: 60 }}
+                onChange={(value) => setQtdCaracteres(value as string)}
+                style={{ width: 80 }}
               />
               <Input
                 className="h-15 text-3xl"
@@ -98,15 +103,6 @@ export default function GeradorSenhas() {
             <div className="flex flex-col gap-4">
               <Radio
                 className="text-2xl"
-                checked={habCaracteresEspeciais}
-                onClick={(e) =>
-                  setHabCaracteresEspeciais(!habCaracteresEspeciais)
-                }
-              >
-                Caracteres especiais
-              </Radio>
-              <Radio
-                className="text-2xl"
                 checked={habNumeros}
                 onClick={(e) => setHabNumeros(!habNumeros)}
               >
@@ -118,6 +114,15 @@ export default function GeradorSenhas() {
                 onClick={(e) => setHabHexadecimal(!habHexadecimal)}
               >
                 Hexadecimal 0-9, A-F
+              </Radio>
+              <Radio
+                className="text-2xl"
+                checked={habCaracteresEspeciais}
+                onClick={(e) =>
+                  setHabCaracteresEspeciais(!habCaracteresEspeciais)
+                }
+              >
+                Caracteres especiais
               </Radio>
             </div>
           </div>
