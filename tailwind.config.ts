@@ -3,7 +3,14 @@ export {};
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      borderWidth: {
+        "border-left": "1px",
+      },
+      borderColor: {
+        "border-left": "#181C2A",
+      },
+    },
     colors: {
       "green-100": "#50B2C0",
       "green-200": "#255D6A",
