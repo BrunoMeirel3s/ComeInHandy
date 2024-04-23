@@ -12,13 +12,18 @@ import useCopyToClipboard from "@/hooks/useCopyToClipboard";
 import SideBarOtherFeatures from "@/components/organisms/SideBarOtherFeatures";
 import Button from "@/components/atoms/Button";
 
+import axios from "axios";
+
 export default function CopiarEntreDispositivos() {
-  const { generateRandomPassword } = useContext(FeaturesContext);
   const { isCopied, copyToClipboard } = useCopyToClipboard();
   const [api, contextHolder] = notification.useNotification();
-  const [textoSalvarCopiar, setTextoSalvarCopiar] = useState<string>("");
 
-
+  const {
+    textoSalvarCopiar,
+    handleSetTextoSalvarCopiar,
+    getTextFeatureCopiarEntreDispositivos,
+    putTextFeatureCopiarEntreDispositivos,
+  } = useContext(FeaturesContext);
 
   function handleCopyToClipboard(text: string | number) {
     copyToClipboard(text);
@@ -32,6 +37,38 @@ export default function CopiarEntreDispositivos() {
       });
   }
 
+  async function handleLimparTexto() {
+    const response = await putTextFeatureCopiarEntreDispositivos("");
+
+    response.error === false &&
+      api.info({
+        message: `Texto apagado`,
+        description: `Texto apagado com sucesso!`,
+        placement: "bottomRight",
+        duration: 5,
+      });
+
+    response.error === false && handleSetTextoSalvarCopiar("");
+  }
+
+  async function handleSalvarTexto() {
+    const response = await putTextFeatureCopiarEntreDispositivos(
+      textoSalvarCopiar
+    );
+
+    response.error === false &&
+      api.success({
+        message: `Texto salvo!`,
+        description: `Texto salvo com sucesso!`,
+        placement: "bottomRight",
+        duration: 5,
+      });
+  }
+
+  useEffect(() => {
+    getTextFeatureCopiarEntreDispositivos();
+  }, []);
+
   return (
     <>
       {contextHolder}
@@ -41,19 +78,27 @@ export default function CopiarEntreDispositivos() {
           <div className="flex flex-row mt-8">
             <div className=" flex flex-col items-center gap-4">
               <Input.TextArea
-                className="text-md md:w-256 w-96 h-30 md:h-128"
+                className="text-md md:w-256 w-96 h-96 md:h-128"
                 placeholder="Insira o texto que deseja salvar"
                 value={textoSalvarCopiar}
-                onChange={(e) => setTextoSalvarCopiar(e.target.value)}
+                onChange={(e) => handleSetTextoSalvarCopiar(e.target.value)}
                 style={{ resize: "none" }}
                 showCount
               />
-              <Button
-                className={"w-56"}
-                onClick={(e) => handleCopyToClipboard(textoSalvarCopiar)}
-              >
-                <span className="text-xl">Copiar</span>
-              </Button>
+              <div className="flex flex-col md:flex-row gap-4">
+                <Button className={"w-56"} onClick={(e) => handleSalvarTexto()}>
+                  <span className="text-xl">Salvar</span>
+                </Button>
+                <Button
+                  className={"w-56"}
+                  onClick={(e) => handleCopyToClipboard(textoSalvarCopiar)}
+                >
+                  <span className="text-xl">Copiar</span>
+                </Button>
+                <Button className={"w-56"} onClick={(e) => handleLimparTexto()}>
+                  <span className="text-xl">Limpar</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
