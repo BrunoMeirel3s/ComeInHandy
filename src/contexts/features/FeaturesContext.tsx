@@ -42,16 +42,8 @@ export function FeaturesProvider({ children }: FeaturesProviderProps) {
       title: "Gerador de senhas",
     },
     {
-      id: "removedorFormatacao",
-      title: "Removedor de formatação",
-    },
-    {
-      id: "removedorAcentos",
-      title: "Removedor de acentos",
-    },
-    {
-      id: "maisculoMinusculo",
-      title: "Maiúsculo e minúsculo",
+      id: "formatacaoTexto",
+      title: "Formatação de Texto",
     },
     {
       id: "copiarEntreDispositivos",

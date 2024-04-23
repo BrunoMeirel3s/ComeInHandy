@@ -3,6 +3,8 @@ import {
   Backspace,
   ArrowsDownUp,
   ClipboardText,
+  ArticleNyTimes,
+  TextIndent
 } from "@phosphor-icons/react";
 
 interface CardFeatureProps {
@@ -20,8 +22,8 @@ export default function CardFeature({ id, title }: CardFeatureProps) {
         {id === "geradorSenhas" && (
           <Password size={32} style={{ background: "transparent" }} />
         )}
-        {id === "removedorFormatacao" && (
-          <Backspace size={32} style={{ background: "transparent" }} />
+        {id === "formatacaoTexto" && (
+          <TextIndent size={32} style={{ background: "transparent" }} />
         )}
         {id === "removedorAcentos" && (
           <Backspace size={32} style={{ background: "transparent" }} />
