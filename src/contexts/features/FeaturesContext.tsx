@@ -112,7 +112,7 @@ export function FeaturesProvider({ children }: FeaturesProviderProps) {
     text: string
   ): Promise<DefaultResponse> {
     const response = (await axios
-      .get(`/api/copiarEntreDispositivos?action=update&text=${text}`)
+      .get(`/api/copiarEntreDispositivos?action=update&text=${encodeURIComponent(text)}`)
       .then((response) => response?.data)
       .catch((err) => err.response?.data)) as DefaultResponse;
 
