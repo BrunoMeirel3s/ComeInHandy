@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ReactNode, createContext, useEffect, useRef, useState } from "react";
 
 interface Feature {
@@ -5,8 +6,15 @@ interface Feature {
   title: string;
 }
 
+interface DefaultResponse {
+  error: boolean;
+  message: string;
+  data: {};
+}
+
 interface FeaturesContextType {
   features: Feature[];
+  textoSalvarCopiar: string;
   generateRandomPassword: (
     length: number,
     includeUppercase: boolean,
@@ -14,6 +22,11 @@ interface FeaturesContextType {
     includeSymbols: boolean,
     hexadecimalOnly: boolean
   ) => string;
+  handleSetTextoSalvarCopiar: (text: string) => void;
+  getTextFeatureCopiarEntreDispositivos: () => void;
+  putTextFeatureCopiarEntreDispositivos: (
+    text: string
+  ) => Promise<DefaultResponse>;
 }
 
 interface FeaturesProviderProps {
@@ -45,6 +58,7 @@ export function FeaturesProvider({ children }: FeaturesProviderProps) {
       title: "Copiar entre dispositivos",
     },
   ];
+  const [textoSalvarCopiar, setTextoSalvarCopiar] = useState<string>("");
 
   function generateRandomPassword(
     length,
@@ -79,8 +93,43 @@ export function FeaturesProvider({ children }: FeaturesProviderProps) {
     return password;
   }
 
+  function handleSetTextoSalvarCopiar(text: string) {
+    setTextoSalvarCopiar(text);
+  }
+
+  async function getTextFeatureCopiarEntreDispositivos() {
+    await axios
+      .get("/api/copiarEntreDispositivos?action=get")
+      .then((response) => {
+        setTextoSalvarCopiar(response.data.data.text);
+      })
+      .catch((err) => {
+        setTextoSalvarCopiar("");
+      });
+  }
+
+  async function putTextFeatureCopiarEntreDispositivos(
+    text: string
+  ): Promise<DefaultResponse> {
+    const response = (await axios
+      .get(`/api/copiarEntreDispositivos?action=update&text=${text}`)
+      .then((response) => response?.data)
+      .catch((err) => err.response?.data)) as DefaultResponse;
+
+    return response;
+  }
+
   return (
-    <FeaturesContext.Provider value={{ features, generateRandomPassword }}>
+    <FeaturesContext.Provider
+      value={{
+        features,
+        textoSalvarCopiar,
+        generateRandomPassword,
+        handleSetTextoSalvarCopiar,
+        getTextFeatureCopiarEntreDispositivos,
+        putTextFeatureCopiarEntreDispositivos,
+      }}
+    >
       {children}
     </FeaturesContext.Provider>
   );

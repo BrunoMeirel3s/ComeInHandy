@@ -10,6 +10,16 @@ module.exports = {
       borderColor: {
         "border-left": "#181C2A",
       },
+      width: {
+        '128': '32rem',
+        '256': '64rem',
+        '512': '128rem'
+      },
+      height: {
+        '128': '32rem',
+        '256': '64rem',
+        '512': '128rem'
+      }
     },
     colors: {
       "green-100": "#50B2C0",
